@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                   _______,                            _______, _______, _______, _______, _______, _______),
 
     [FUNC] = LAYOUT_all( /* Functions */
-        _______, KC_F14,  KC_F15,  KC_WSCH, KC_WHOM, KC_MSEL, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______,           RGB_MOD,
+        DB_TOGG, KC_F14,  KC_F15,  KC_WSCH, KC_WHOM, KC_MSEL, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______,           RGB_MOD,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_SPD, RGB_SPI, _______,           _______,
         _______, MS_BTN2, MS_UP,   MS_BTN1, MS_WHLD, _______, _______, _______, KC_INS,  _______, KC_PSCR,_______, _______, RGB_MOD,           _______,
         _______, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLU, _______, _______, _______, _______, RGB_TOG, _______, _______, RGB_MOD, RGB_HUI,           _______,
@@ -103,14 +103,41 @@ void set_color(uint8_t l1, uint8_t l2, HSV hsv) {
     }
 }
 
+enum __groups { ___, PIN, RIN, MID, IDL, IDR };
+
+const uint8_t typist_ligts[] = {
+    ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___,
+    ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___,
+    ___, PIN, RIN, MID, IDL, IDL, IDR, IDR, MID, RIN, PIN, PIN, PIN, PIN, ___, /* 29 - 43 */
+    ___, PIN, RIN, MID, IDL, IDL, IDR, IDR, MID, RIN, PIN, PIN, ___, ___,      /* 44 - 57 */
+    ___, ___, ___, PIN, RIN, MID, IDL, IDL, IDR, IDR, MID, RIN, PIN, ___,      /* 58 - 72 */
+};
+
+const HSV typist_colors[] = {(HSV){HSV_BLACK}, (HSV){HSV_TEAL}, (HSV){HSV_GREEN}, (HSV){HSV_GOLD}, (HSV){HSV_BLUE}, (HSV){HSV_PINK}};
+
+void set_typist_colors(void) {
+    const RGB colors[] = {
+        get_color(typist_colors[___]),
+        get_color(typist_colors[PIN]),
+        get_color(typist_colors[RIN]),
+        get_color(typist_colors[MID]),
+        get_color(typist_colors[IDL]),
+        get_color(typist_colors[IDR]),
+    };
+
+    for (uint8_t i = 0; i < 72; i++) {
+        RGB c = colors[typist_ligts[i]];
+        rgb_matrix_set_color(i, c.r, c.g, c.b);
+    }
+}
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (rgb_matrix_get_flags() == 0)
+        return false;
 
     switch(get_highest_layer(layer_state|default_layer_state)) {
         case BASE:
-            if (rgb_matrix_get_mode() < 2) {
-                rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-                rgb_matrix_sethsv_noeeprom(HSV_OFF);
-            }
+            set_typist_colors();
             return true;
         case DIGI:
             set_color(45, 56, (HSV){HSV_PURPLE});
