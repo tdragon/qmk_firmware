@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
         _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
         _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
-        OSL(DIGI),KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,          KC_HOME,
+        TO(BASE),KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,          KC_HOME,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______,
         _______, _______, _______,                   _______,                            _______, _______, _______, _______, _______, _______),
 
@@ -89,23 +89,39 @@ void keyboard_post_init_user(void) {
     rgb_matrix_enable_noeeprom();
 }
 
+RGB get_color(HSV hsv) {
+     if (hsv.v > rgb_matrix_get_val()) {
+        hsv.v = rgb_matrix_get_val();
+    }
+    return hsv_to_rgb(hsv);
+}
+
+void set_color(uint8_t l1, uint8_t l2, HSV hsv) {
+    RGB c = get_color(hsv);
+    for (uint8_t i = l1; i < l2; i++) {
+        rgb_matrix_set_color(i, c.r, c.g, c.b);
+    }
+}
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
     switch(get_highest_layer(layer_state|default_layer_state)) {
-        case DIGI:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                rgb_matrix_set_color(i, RGB_PURPLE);
+        case BASE:
+            if (rgb_matrix_get_mode() < 2) {
+                rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+                rgb_matrix_sethsv_noeeprom(HSV_OFF);
             }
+            return true;
+        case DIGI:
+            set_color(45, 56, (HSV){HSV_PURPLE});
             return true;
         case FUNC:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                rgb_matrix_set_color(i, RGB_TEAL);
-            }
+            set_color(45, 56, (HSV){HSV_RED});
             return true;
         case SYMB:
-            for (uint8_t i = led_min; i < led_max; i++) {
-                rgb_matrix_set_color(i, RGB_GREEN);
-            }
+            set_color(30, 42, (HSV){HSV_GREEN});
+            set_color(45, 56, (HSV){HSV_GREEN});
+            set_color(60, 70, (HSV){HSV_GREEN});
             return true;
 
     }
