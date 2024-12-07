@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,           KC_MUTE,
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,          KC_HOME,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,          KC_PGUP,
-        OSL(DIGI),KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_NUHS, KC_ENT,           KC_PGDN,
+        MO(DIGI),KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_NUHS, KC_ENT,           KC_PGDN,
         KC_LSFT, KC_NUBS, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT, KC_UP,   KC_END,
         KC_LCTL, KC_LALT, KC_LGUI,                   LT(SYMB,KC_SPC),                    KC_RALT, KC_RCTL, MO(FUNC),         KC_LEFT, KC_DOWN, KC_RGHT),
 
@@ -50,11 +50,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, GU_TOGG,                   _______,                            _______, _______, _______,          RGB_SAD,  RGB_VAD, RGB_SAI),
 
     [DIGI] = LAYOUT_all( /* Numbers */
-        _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
-        _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
-        _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
-        TO(BASE),KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,          KC_HOME,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, KC_EQL , KC_7,    KC_8,    KC_9,   S(KC_EQL), _______, _______, _______, _______,
+        TO(BASE),_______, _______, _______, _______, _______, KC_DOT , KC_4,    KC_5,    KC_6,   KC_MINS,  _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_1,    KC_2,    KC_3,    KC_SLSH, _______, _______, _______,
         _______, _______, _______,                   _______,                            _______, _______, _______, _______, _______, _______),
 
     [MAC_W] = LAYOUT_all( /* WASD/↑←↓→ */
@@ -107,7 +107,7 @@ enum __groups { ___, PIN, RIN, MID, IDL, IDR };
 
 const uint8_t typist_ligts[] = {
     ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___,
-    ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___,
+    ___, PIN, RIN, MID, IDL, IDL, IDR, IDR, MID, RIN, PIN, PIN, PIN, PIN, ___,
     ___, PIN, RIN, MID, IDL, IDL, IDR, IDR, MID, RIN, PIN, PIN, PIN, PIN, ___, /* 29 - 43 */
     ___, PIN, RIN, MID, IDL, IDL, IDR, IDR, MID, RIN, PIN, PIN, ___, ___,      /* 44 - 57 */
     ___, ___, ___, PIN, RIN, MID, IDL, IDL, IDR, IDR, MID, RIN, PIN, ___,      /* 58 - 72 */
@@ -140,7 +140,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             set_typist_colors();
             return true;
         case DIGI:
-            set_color(45, 56, (HSV){HSV_PURPLE});
+            set_color(35, 41, (HSV){HSV_PURPLE});
+            set_color(50, 55, (HSV){HSV_PURPLE});
+            set_color(66, 71, (HSV){HSV_PURPLE});
             return true;
         case FUNC:
             set_color(45, 56, (HSV){HSV_RED});
