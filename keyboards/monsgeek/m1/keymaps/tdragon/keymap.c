@@ -49,9 +49,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [SYMB] = LAYOUT_all( /* Symbols */
         _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
         _______, _______, _______,    _______,   _______,    _______, _______,    _______,    _______,    _______, _______,    _______, _______, _______, _______,
-        _______, KC_QUOT, S(KC_COMM), S(KC_DOT), S(KC_QUOT), KC_DOT,  S(KC_7),    KC_GRV,     KC_LBRC,    KC_RBRC, S(KC_5),    _______, _______, _______, _______,
+        _______, KC_QUOT, S(KC_COMM), S(KC_DOT), S(KC_QUOT), S(KC_2),  S(KC_7),    KC_GRV,     KC_LBRC,    KC_RBRC, S(KC_5),    _______, _______, _______, _______,
         KC_CAPS, S(KC_1), S(KC_MINS), S(KC_EQL), KC_EQL,     S(KC_3), S(KC_BSLS), S(KC_SCLN), S(KC_9),    S(KC_0), S(KC_SLSH), _______, _______, _______, _______,
-        _______, _______, S(KC_6), KC_SLSH,    S(KC_8),   KC_BSLS,    KC_COMM, S(KC_GRV),  S(KC_4),    S(KC_LBRC), S(KC_RBRC), S(KC_2), _______, _______, _______,
+        _______, _______, S(KC_6), KC_SLSH,    S(KC_8),   KC_BSLS,    KC_MINS, S(KC_GRV),  S(KC_4),    S(KC_LBRC), S(KC_RBRC), S(KC_2), _______, _______, _______,
         _______, _______, _______,                   _______,                            _______, _______, _______, _______, _______, _______),
 
     [FUNC] = LAYOUT_all( /* Functions */
