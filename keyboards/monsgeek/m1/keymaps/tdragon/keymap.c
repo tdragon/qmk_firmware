@@ -26,9 +26,9 @@ enum __layers { BASE, SYMB, FUNC, DIGI, MAC_W, MAC_FN };
 #define HR_S LALT_T(KC_S)
 #define HR_D LSFT_T(KC_D)
 #define HR_F LGUI_T(KC_F)
-#define HR_G LAG_T(KC_G)
+#define HR_G HYPR_T(KC_G)
 
-#define HR_H LAG_T(KC_H)
+#define HR_H HYPR_T(KC_H)
 #define HR_J RGUI_T(KC_J)
 #define HR_K RSFT_T(KC_K)
 #define HR_L RALT_T(KC_L)
